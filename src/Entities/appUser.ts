@@ -1,16 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+} from "typeorm";
+import { BankAccount } from "./BankAccount";
 
 @Entity()
 export class AppUser extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column()
-  firstName!: string;
+  firstName: string;
 
-  @Column()
-  email!: string;
+  @Column({
+    unique: true,
+  })
+  email: string;
+
+  @OneToOne(() => BankAccount, (bankAccount) => bankAccount.appUser)
+  bankAccount: BankAccount;
 }

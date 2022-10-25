@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import { AppDataSource } from "./data-source";
 import { userRoutes } from "../routes/userRoutes";
-import { AppUser } from "../Entities/appUser";
 import config from "../init/config";
 
 AppDataSource.initialize()
@@ -41,24 +40,22 @@ AppDataSource.initialize()
     app.listen(config.port);
 
     // insert new users for test
-    await AppDataSource.manager.save(
-      AppDataSource.manager.create(AppUser, {
-        name: "Timber",
-        firstName: "Saw",
-        email: "tsaw@gmail.com",
-      })
-    );
+    // await AppDataSource.manager.save(
+    //   AppDataSource.manager.create(AppUser, {
+    //     name: "Timber",
+    //     firstName: "Saw",
+    //     email: "tsaw@gmail.com",
+    //   })
+    // );
 
-    await AppDataSource.manager.save(
-      AppDataSource.manager.create(AppUser, {
-        name: "Phantom",
-        firstName: "Assassin",
-        email: "passassin@gmail.com",
-      })
-    );
+    // await AppDataSource.manager.save(
+    //   AppDataSource.manager.create(AppUser, {
+    //     name: "Phantom",
+    //     firstName: "Assassin",
+    //     email: "passassin@gmail.com",
+    //   })
+    // );
 
-    console.log(
-      "Express server has started on port 3000. Open http://localhost:3000/users to see results"
-    );
+    console.log(`Express server has started on port ${config.port}.`);
   })
   .catch((error) => console.log(error));

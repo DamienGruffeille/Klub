@@ -25,6 +25,8 @@ export class BankAccount extends BaseEntity {
   balance: number;
 
   @OneToOne(() => AppUser, (appUser) => appUser.bankAccount)
-  @JoinColumn()
+  @JoinColumn({
+    name: "app_user_id",
+  })
   appUser: AppUser;
 }

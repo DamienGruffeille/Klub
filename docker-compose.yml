@@ -1,7 +1,8 @@
 version: "3"
 services:
   postgres:
-    image: klub
+    # container_name: postgres,
+    image: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

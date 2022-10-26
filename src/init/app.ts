@@ -5,6 +5,10 @@ import { userRoutes } from "../routes/userRoutes";
 import { bankAccountRoutes } from "../routes/bankAccountRoutes";
 import config from "../init/config";
 
+function handleError(err, req, res, next) {
+  res.status(err.statusCode || 500).send({ message: err.message });
+}
+
 AppDataSource.initialize()
   .then(async () => {
     // create express app
@@ -15,20 +19,16 @@ AppDataSource.initialize()
     userRoutes.forEach((route) => {
       (app as any)[route.method](
         route.route,
-        (req: Request, res: Response, next: Function) => {
-          const result = new (route.controller as any)()[route.action](
-            req,
-            res,
-            next
-          );
-          if (result instanceof Promise) {
-            result.then((result) =>
-              result !== null && result !== undefined
-                ? res.send(result)
-                : undefined
+        async (req: Request, res: Response, next: Function) => {
+          try {
+            const result = await new (route.controller as any)()[route.action](
+              req,
+              res,
+              next
             );
-          } else if (result !== null && result !== undefined) {
             res.json(result);
+          } catch (error) {
+            next(error); // le middleware par défaut next renvoie un html d'erreur
           }
         }
       );
@@ -37,24 +37,22 @@ AppDataSource.initialize()
     bankAccountRoutes.forEach((route) => {
       (app as any)[route.method](
         route.route,
-        (req: Request, res: Response, next: Function) => {
-          const result = new (route.controller as any)()[route.action](
-            req,
-            res,
-            next
-          );
-          if (result instanceof Promise) {
-            result.then((result) =>
-              result !== null && result !== undefined
-                ? res.send(result)
-                : undefined
+        async (req: Request, res: Response, next: Function) => {
+          try {
+            const result = await new (route.controller as any)()[route.action](
+              req,
+              res,
+              next
             );
-          } else if (result !== null && result !== undefined) {
             res.json(result);
+          } catch (error) {
+            next(error);
           }
         }
       );
     });
+
+    app.use(handleError);
 
     // setup express app here
     // ...

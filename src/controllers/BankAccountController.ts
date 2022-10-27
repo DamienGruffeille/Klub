@@ -15,6 +15,12 @@ export class BankAccountController {
     });
   }
 
+  async oneByCardID(request: Request, response: Response, next: NextFunction) {
+    return this.bankAccountRepository.findOneBy({
+      cardID: request.params.cardID,
+    });
+  }
+
   async save(request: Request, response: Response, next: NextFunction) {
     return this.bankAccountRepository.save(request.body);
   }

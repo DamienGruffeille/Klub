@@ -14,6 +14,12 @@ export const bankAccountRoutes = [
     action: "one",
   },
   {
+    method: "get",
+    route: "/bankAccounts/cardID/:cardID",
+    controller: BankAccountController,
+    action: "oneByCardID",
+  },
+  {
     method: "post",
     route: "/bankAccounts",
     controller: BankAccountController,

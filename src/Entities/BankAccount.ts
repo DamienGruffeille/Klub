@@ -5,8 +5,10 @@ import {
   BaseEntity,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { AppUser } from "./AppUser";
+import { Transaction } from "./Transaction";
 
 @Entity()
 export class BankAccount extends BaseEntity {
@@ -20,6 +22,11 @@ export class BankAccount extends BaseEntity {
   ibanBic: string;
 
   @Column({
+    unique: true,
+  })
+  cardID: string;
+
+  @Column({
     type: "numeric",
   })
   balance: number;
@@ -31,4 +38,8 @@ export class BankAccount extends BaseEntity {
     name: "app_user_id",
   })
   appUser: AppUser;
+
+  //fonction qui retourne une transaction
+  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
+  transactions: Transaction[];
 }

@@ -19,12 +19,17 @@ export class TransactionController {
 
   async save(request: Request, response: Response, next: NextFunction) {
     if (request.body.type === "CARD_AUTHORIZATION") {
+      const bankAccount = await this.bankAccountRepository.findOneBy({
+        cardID: request.body.meta_info.card_id,
+      });
+
       return this.transactionRepository.save({
         id: request.body.id,
         amount: request.body.amount.value,
         description: request.body.amount.unit,
         typeOfTransaction: request.body.type,
         merchantID: request.body.meta_info.merchant.id,
+        bankAccount: bankAccount,
       });
     } else if (request.body.type === "VIREMENT") {
       return this.transactionRepository.save({

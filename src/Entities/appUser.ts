@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   OneToOne,
-  JoinColumn,
 } from "typeorm";
 import { BankAccount } from "./BankAccount";
 

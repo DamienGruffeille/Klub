@@ -3,13 +3,13 @@ import { TransactionController } from "../controllers/TransactionController";
 export const transactionRoutes = [
   {
     method: "get",
-    route: "/webhooks/transactions",
+    route: "/transactions",
     controller: TransactionController,
     action: "all",
   },
   {
     method: "get",
-    route: "/webhooks/transactions/:id",
+    route: "/transactions/:id",
     controller: TransactionController,
     action: "one",
   },

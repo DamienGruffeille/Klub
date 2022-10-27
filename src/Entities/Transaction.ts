@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { BankAccount } from "./BankAccount";
+import { Merchant } from "./Merchant";
 
 export enum TransactionTypes {
   VIREMENT = "VIREMENT",
@@ -33,19 +34,27 @@ export class Transaction extends BaseEntity {
   })
   typeOfTransaction: string;
 
-  @Column({
-    nullable: true,
-  })
-  merchantID: number;
+  // @Column({
+  //   nullable: true,
+  // })
+  // merchantID: number;
 
   @Column({
     nullable: true,
   })
   userName: string;
 
-  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions)
+  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions, {
+    nullable: false,
+  })
   @JoinColumn({
     name: "bankAccount_id",
   })
   bankAccount: BankAccount;
+
+  @ManyToOne(() => Merchant, (merchant) => merchant.transactions, {
+    eager: true,
+  })
+  @JoinColumn()
+  merchant: Merchant;
 }

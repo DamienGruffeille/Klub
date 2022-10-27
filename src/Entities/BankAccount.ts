@@ -33,6 +33,7 @@ export class BankAccount extends BaseEntity {
 
   @OneToOne(() => AppUser, (appUser) => appUser.bankAccount, {
     onDelete: "NO ACTION",
+    nullable: false,
   })
   @JoinColumn({
     name: "app_user_id",
@@ -40,6 +41,8 @@ export class BankAccount extends BaseEntity {
   appUser: AppUser;
 
   //fonction qui retourne une transaction
-  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
+  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount, {
+    eager: true,
+  })
   transactions: Transaction[];
 }

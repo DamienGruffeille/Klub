@@ -35,7 +35,4 @@ export class Merchant extends BaseEntity {
     name: "merchant_category",
   })
   merchantCategory: MerchantCategory;
-
-  @OneToMany(() => Transaction, (transaction) => transaction.merchant)
-  transactions: Transaction[];
 }

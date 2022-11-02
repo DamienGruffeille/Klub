@@ -4,6 +4,8 @@ import { Transaction } from "../entities/Transaction";
 import { BankAccount } from "../entities/BankAccount";
 import { Merchant } from "../entities/Merchant";
 import { MerchantCategory } from "../entities/MerchantCategory";
+import { MerchantBrand } from "../entities/MerchantBrand";
+import { Cashback } from "../entities/Cashback";
 
 export class TransactionController {
   private transactionRepository = AppDataSource.getRepository(Transaction);
@@ -11,6 +13,7 @@ export class TransactionController {
   private merchantRepository = AppDataSource.getRepository(Merchant);
   private merchantCategoryRepository =
     AppDataSource.getRepository(MerchantCategory);
+  private merchantBrandRepository = AppDataSource.getRepository(MerchantBrand);
 
   async all(request: Request, response: Response, next: NextFunction) {
     return this.transactionRepository.find();
@@ -45,11 +48,31 @@ export class TransactionController {
           merchantToUse = await this.merchantRepository.save({
             id: request.body.meta_info.merchant.id,
             name: request.body.meta_info.merchant.name,
-            description: "nouveau partenaire",
+            description: "unknown merchant",
             merchantCategory: merchantCategory,
           });
         } else {
           merchantToUse = merchant;
+
+          if (merchantToUse.partner) {
+            console.log("ce Merchant est partenaire !!!!!!!");
+
+            const cashback = await this.merchantBrandRepository
+              .createQueryBuilder("merchant_brand")
+              .select("merchant_brand.cashbackRate")
+              .leftJoinAndSelect("merchant_brand.merchants", "merchant")
+              .where("merchant.id = :merchantId", {
+                merchantId: request.body.meta_info.merchant.id,
+              })
+              .getOne();
+
+            console.log("Le cashback 2 est de : " + cashback.cashbackRate);
+
+            // Calculer le montant du cashback
+            const cashbackAmount =
+              (request.body.amount.value * cashback.cashbackRate) / 100;
+            // Créer le cashback
+          }
         }
 
         return this.transactionRepository.save({

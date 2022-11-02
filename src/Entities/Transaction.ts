@@ -37,27 +37,6 @@ export class Transaction extends BaseEntity {
   @Column({
     nullable: true,
   })
-  merchantID: number;
-
-  @Column({
-    nullable: true,
-  })
-  merchantCategoryCode: number;
-
-  @Column({
-    nullable: true,
-  })
-  merchantName: string;
-
-  @Column({
-    nullable: true,
-    length: 2,
-  })
-  merchantCountryCode: string;
-
-  @Column({
-    nullable: true,
-  })
   userName: string;
 
   @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions, {
@@ -67,4 +46,10 @@ export class Transaction extends BaseEntity {
     name: "bankAccount_id",
   })
   bankAccount: BankAccount;
+
+  @ManyToOne(() => Merchant, (merchant) => merchant.transactions, {
+    eager: true,
+  })
+  @JoinColumn()
+  merchant: Merchant;
 }

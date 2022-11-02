@@ -20,7 +20,14 @@ export class Merchant extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    default: false,
+  })
+  partner: boolean;
+
+  @Column({
+    nullable: true,
+  })
   logo: string;
 
   @Column()
@@ -35,4 +42,7 @@ export class Merchant extends BaseEntity {
     name: "merchant_category",
   })
   merchantCategory: MerchantCategory;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.merchant)
+  transactions: Transaction[];
 }

@@ -34,11 +34,6 @@ export class Transaction extends BaseEntity {
   })
   typeOfTransaction: string;
 
-  // @Column({
-  //   nullable: true,
-  // })
-  // merchantID: number;
-
   @Column({
     nullable: true,
   })

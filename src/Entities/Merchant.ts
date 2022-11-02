@@ -20,7 +20,14 @@ export class Merchant extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    default: false,
+  })
+  partner: boolean;
+
+  @Column({
+    nullable: true,
+  })
   logo: string;
 
   @Column()

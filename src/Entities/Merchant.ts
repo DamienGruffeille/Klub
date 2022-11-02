@@ -7,6 +7,7 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
+import { MerchantBrand } from "./MerchantBrand";
 import { MerchantCategory } from "./MerchantCategory";
 import { Transaction } from "./Transaction";
 
@@ -25,11 +26,6 @@ export class Merchant extends BaseEntity {
   })
   partner: boolean;
 
-  @Column({
-    nullable: true,
-  })
-  logo: string;
-
   @Column()
   description: string;
 
@@ -42,6 +38,14 @@ export class Merchant extends BaseEntity {
     name: "merchant_category",
   })
   merchantCategory: MerchantCategory;
+
+  @ManyToOne(() => MerchantBrand, (merchantBrand) => merchantBrand.merchants, {
+    nullable: true,
+  })
+  @JoinColumn({
+    name: "merchantBrand_id",
+  })
+  merchantBrand: MerchantBrand;
 
   @OneToMany(() => Transaction, (transaction) => transaction.merchant)
   transactions: Transaction[];

@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Merchant } from "./Merchant";
 
 @Entity()
 export class MerchantBrand extends BaseEntity {
@@ -8,6 +15,14 @@ export class MerchantBrand extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({
+    nullable: true,
+  })
+  logo: string;
+
   @Column()
-  cashback: number;
+  cashbackRate: number;
+
+  @OneToMany(() => Merchant, (merchant) => merchant.merchantBrand)
+  merchants: Merchant[];
 }

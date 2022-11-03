@@ -5,6 +5,7 @@ import { userRoutes } from "../routes/userRoutes";
 import { bankAccountRoutes } from "../routes/bankAccountRoutes";
 import { transactionRoutes } from "../routes/transactionRoutes";
 import config from "../init/config";
+import { transactionsWebhooksRoutes } from "../routes/transactionsWebhooksRoutes";
 
 function handleError(err, req, res, next) {
   res
@@ -65,7 +66,26 @@ AppDataSource.initialize()
               res,
               next
             );
-            // res.json(result);
+            res.json(result);
+          } catch (error) {
+            next(error);
+          }
+        }
+      );
+    });
+
+    transactionsWebhooksRoutes.forEach((route) => {
+      (app as any)[route.method](
+        route.route,
+        async (req: Request, res: Response, next: Function) => {
+          try {
+            const result = await new (route.controller as any)()[route.action](
+              req,
+              res,
+              next
+            );
+
+            res.json(result);
           } catch (error) {
             next(error);
           }

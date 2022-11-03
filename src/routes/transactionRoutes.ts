@@ -13,10 +13,10 @@ export const transactionRoutes = [
     controller: TransactionController,
     action: "one",
   },
-  {
-    method: "post",
-    route: "/webhooks/transactions",
-    controller: TransactionController,
-    action: "save",
-  },
+  // {
+  //   method: "post",
+  //   route: "/webhooks/transactions",
+  //   controller: TransactionController,
+  //   action: "save",
+  // },
 ];

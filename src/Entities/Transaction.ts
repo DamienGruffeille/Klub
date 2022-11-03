@@ -55,6 +55,10 @@ export class Transaction extends BaseEntity {
   @JoinColumn()
   merchant: Merchant;
 
-  @OneToOne(() => Cashback, (cashback) => cashback.transaction)
+  @OneToOne(() => Cashback, (cashback) => cashback.transaction, {
+    nullable: true,
+    eager: true,
+  })
+  @JoinColumn()
   cashback: Cashback;
 }

@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -32,6 +31,5 @@ export class Cashback extends BaseEntity {
   status: string;
 
   @OneToOne(() => Transaction, (transaction) => transaction.cashback)
-  @JoinColumn()
   transaction: Transaction;
 }

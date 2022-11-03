@@ -5,8 +5,10 @@ import {
   BaseEntity,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from "typeorm";
 import { BankAccount } from "./BankAccount";
+import { Cashback } from "./Cashback";
 import { Merchant } from "./Merchant";
 
 export enum TransactionTypes {
@@ -52,4 +54,11 @@ export class Transaction extends BaseEntity {
   })
   @JoinColumn()
   merchant: Merchant;
+
+  @OneToOne(() => Cashback, (cashback) => cashback.transaction, {
+    nullable: true,
+    eager: true,
+  })
+  @JoinColumn()
+  cashback: Cashback;
 }

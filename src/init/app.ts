@@ -7,7 +7,9 @@ import { transactionRoutes } from "../routes/transactionRoutes";
 import config from "../init/config";
 
 function handleError(err, req, res, next) {
-  res.status(err.statusCode || 500).send({ message: err.message });
+  res
+    .status(err.statusCode || 500)
+    .send({ message: +"Erreur ici" + err.message });
 }
 
 AppDataSource.initialize()
@@ -63,7 +65,7 @@ AppDataSource.initialize()
               res,
               next
             );
-            res.json(result);
+            // res.json(result);
           } catch (error) {
             next(error);
           }

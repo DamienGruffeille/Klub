@@ -5,4 +5,5 @@ Had to define a database schema for handling bank transactions by creating a web
 Set a cashback system, and creation of a merchant DB.
 
 ## Database Schema
-![dbSchema](https://user-images.githubusercontent.com/107174519/200318370-ca921cee-495c-41fc-8a05-28370e19368e.jpg)
+
+![dbSchema](https://user-images.githubusercontent.com/107174519/200319553-8fe5ca94-2885-463c-8281-22f8ccf03b37.jpg)

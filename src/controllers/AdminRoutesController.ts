@@ -7,6 +7,7 @@ export class AdminRoutesController {
   private cashbackRepository = AppDataSource.getRepository(Cashback);
   private transactionRepository = AppDataSource.getRepository(Transaction);
 
+  // Montant total des cashback par merchant
   async totalAmountCashbackByMerchant(
     request: Request,
     response: Response,
@@ -23,6 +24,7 @@ export class AdminRoutesController {
       .execute();
   }
 
+  // Liste des merchants avec 2 acheteurs différents minimum
   async merchantListWith2DifferentBuyers(
     request: Request,
     response: Response,
@@ -40,6 +42,7 @@ export class AdminRoutesController {
       .execute();
   }
 
+  // TOP 10 des merchants non partenaires
   async topTenNonPartnerMerchant(
     request: Request,
     response: Response,
@@ -54,6 +57,7 @@ export class AdminRoutesController {
       .where("merchant.partner = false")
       .groupBy("merchant.id")
       .orderBy("COUNT(merchant.id)", "DESC")
+      .limit(10)
       .execute();
   }
 }

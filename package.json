@@ -2,10 +2,11 @@
   "name": "klub",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"tsc --watch\" \"nodemon -w *.ts -w .env dist/init/app.js\""
+    "dev": "concurrently \"tsc --watch\" \"nodemon -w *.ts -w .env dist/init/app.js\"",
+    "start": "node dist/init/app.js"
   },
   "keywords": [],
   "author": "",

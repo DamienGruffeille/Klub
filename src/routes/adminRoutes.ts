@@ -3,19 +3,19 @@ import { AdminRoutesController } from "../controllers/AdminRoutesController";
 export const adminRoutes = [
   {
     method: "get",
-    route: "/admin/totalcashbackbymerchant",
+    route: "/api/admin/merchant/cashback",
     controller: AdminRoutesController,
     action: "totalAmountCashbackByMerchant",
   },
   {
     method: "get",
-    route: "/admin/merchantListWith2DifferentBuyers",
+    route: "/api/admin/merchant/twobuyers",
     controller: AdminRoutesController,
     action: "merchantListWith2DifferentBuyers",
   },
   {
     method: "get",
-    route: "/admin/topten",
+    route: "/api/admin/topten",
     controller: AdminRoutesController,
     action: "topTenNonPartnerMerchant",
   },

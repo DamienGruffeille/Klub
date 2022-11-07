@@ -3,7 +3,7 @@ import { TransactionsWebhooks } from "../controllers/TransactionsWebhooks";
 export const transactionsWebhooksRoutes = [
   {
     method: "post",
-    route: "/webhooks/transactions",
+    route: "/api/webhooks/transactions",
     controller: TransactionsWebhooks,
     action: "save",
   },

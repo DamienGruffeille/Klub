@@ -3,20 +3,14 @@ import { TransactionController } from "../controllers/TransactionController";
 export const transactionRoutes = [
   {
     method: "get",
-    route: "/transactions",
+    route: "/user/:id/transactions",
     controller: TransactionController,
-    action: "all",
+    action: "allTrxByClientId",
   },
   {
     method: "get",
-    route: "/transactions/:id",
+    route: "/user/:id/cashbacks",
     controller: TransactionController,
-    action: "one",
+    action: "allCashbackByClientId",
   },
-  // {
-  //   method: "post",
-  //   route: "/webhooks/transactions",
-  //   controller: TransactionController,
-  //   action: "save",
-  // },
 ];

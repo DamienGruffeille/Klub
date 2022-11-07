@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  CreateDateColumn,
 } from "typeorm";
 import { BankAccount } from "./BankAccount";
 import { Cashback } from "./Cashback";
@@ -41,6 +42,11 @@ export class Transaction extends BaseEntity {
   })
   userName: string;
 
+  @CreateDateColumn({
+    type: "date",
+  })
+  dateOfTransaction: Date;
+
   @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions, {
     nullable: false,
   })
@@ -49,15 +55,12 @@ export class Transaction extends BaseEntity {
   })
   bankAccount: BankAccount;
 
-  @ManyToOne(() => Merchant, (merchant) => merchant.transactions, {
-    eager: true,
-  })
+  @ManyToOne(() => Merchant, (merchant) => merchant.transactions)
   @JoinColumn()
   merchant: Merchant;
 
   @OneToOne(() => Cashback, (cashback) => cashback.transaction, {
     nullable: true,
-    eager: true,
   })
   @JoinColumn()
   cashback: Cashback;

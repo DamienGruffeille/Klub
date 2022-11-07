@@ -41,8 +41,6 @@ export class BankAccount extends BaseEntity {
   appUser: AppUser;
 
   //fonction qui retourne une transaction
-  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount, {
-    eager: true,
-  })
+  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
   transactions: Transaction[];
 }

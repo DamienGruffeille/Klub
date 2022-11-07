@@ -6,6 +6,7 @@ import { bankAccountRoutes } from "../routes/bankAccountRoutes";
 import { transactionRoutes } from "../routes/transactionRoutes";
 import config from "../init/config";
 import { transactionsWebhooksRoutes } from "../routes/transactionsWebhooksRoutes";
+import { adminRoutes } from "../routes/adminRoutes";
 
 function handleError(err, req, res, next) {
   res
@@ -93,10 +94,26 @@ AppDataSource.initialize()
       );
     });
 
-    app.use(handleError);
+    adminRoutes.forEach((route) => {
+      (app as any)[route.method](
+        route.route,
+        async (req: Request, res: Response, next: Function) => {
+          try {
+            const result = await new (route.controller as any)()[route.action](
+              req,
+              res,
+              next
+            );
 
-    // setup express app here
-    // ...
+            res.json(result);
+          } catch (error) {
+            next(error);
+          }
+        }
+      );
+    });
+
+    app.use(handleError);
 
     // start express server
     app.listen(config.port);

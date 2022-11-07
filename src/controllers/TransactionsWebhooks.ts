@@ -100,6 +100,8 @@ export class TransactionsWebhooks {
             merchant: merchantToUse,
             cashback: cashback,
           });
+          let newBalance =
+            bankAccount.balance - request.body.amount.value / 100;
 
           // S'il y a un cashback pour cette trx, mise à jour de son statut
           if (cashback) {
@@ -109,25 +111,18 @@ export class TransactionsWebhooks {
               .set({ status: "VALIDATED" })
               .where("id = :id", { id: cashback.id })
               .execute();
+            newBalance = newBalance + cashback.amount;
           }
 
           // Mise à jour de la balance du bankAccount
-          console.log("Solde actuel : " + bankAccount.balance);
-          console.log("Montant de la trx :" + request.body.amount.value / 100);
-          console.log("Montant du cashback :" + cashback.amount);
-          const newBalance =
-            bankAccount.balance -
-            request.body.amount.value / 100 +
-            cashback.amount;
-
-          console.log("Nouveau solde : " + newBalance);
-
           await this.bankAccountRepository
             .createQueryBuilder()
             .update("bank_account")
             .set({ balance: newBalance })
             .where("id = :id", { id: bankAccount.id })
             .execute();
+
+          console.log("Nouveau solde : " + newBalance);
 
           response
             .status(201)

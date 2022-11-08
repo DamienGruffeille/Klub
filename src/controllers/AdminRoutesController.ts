@@ -36,7 +36,7 @@ export class AdminRoutesController {
       .addSelect("COUNT(DISTINCT transaction.bankAccount_id)", "Nb de trx")
       .innerJoin("transaction.merchant", "merchant")
       .where("transaction.dateOfTransaction >= :d1", { d1: "2022-11-06" })
-      .andWhere("transaction.dateOfTransaction <= :d2", { d2: "2022-11-08" })
+      .andWhere("transaction.dateOfTransaction <= :d2", { d2: "2022-12-06" })
       .groupBy("merchant.name")
       .having("COUNT(DISTINCT transaction.bankAccount_id) >= :n", { n: "2" })
       .execute();

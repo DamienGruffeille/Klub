@@ -33,7 +33,7 @@ export class AdminRoutesController {
     return this.transactionRepository
       .createQueryBuilder("transaction")
       .select("merchant.name")
-      .addSelect("COUNT(DISTINCT transaction.bankAccount_id)")
+      .addSelect("COUNT(DISTINCT transaction.bankAccount_id)", "Nb de trx")
       .innerJoin("transaction.merchant", "merchant")
       .where("transaction.dateOfTransaction >= :d1", { d1: "2022-11-06" })
       .andWhere("transaction.dateOfTransaction <= :d2", { d2: "2022-11-08" })
